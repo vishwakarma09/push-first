@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SmrtCash</title>
+
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+    // Wait for Cordova to load
+    //
+	function onload(){
+		alert('onload');
+		document.addEventListener("deviceready", onDeviceReady, false);
+	}
+    // Cordova is ready
+    //
+	
+	var authWindow;
+	var parentWindow;
+	
+    function onDeviceReady() {
+        // external url
+		parentWindow = window.open('http://machinenode.tk', '_self');
+		var windowOpen = window.open;
+
+		window.open = function(url, name, features, replace) {
+			alert("opening a window");
+			// do other stuff here
+			authWindow = windowOpen(url, '_blank', 'location=no', replace);
+			//var ref = window.open('http://apache.org', '_blank', 'location=yes');
+			 authWindow.addEventListener('loadstart', function(event) { alert('start: ' + event.url); });
+			 authWindow.addEventListener('loadstop', function(event) { alert('stop: ' + event.url); });
+			 authWindow.addEventListener('loaderror', function(event) { alert('error: ' + event.message); });
+			 authWindow.addEventListener('exit', function(event) { alert(event.type); window.history.back(); });
+		}
+    }
+    </script>
+  </head>
+  <body onload="onload()">
+  </body>
+</html>
